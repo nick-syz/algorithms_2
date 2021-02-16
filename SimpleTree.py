@@ -33,13 +33,14 @@ class SimpleTree:
 
     def FindNodesByValue(self, val):
         nodes = []
-        if self.Root.NodeValue == val:
-            nodes = [self.Root]
-        for node in self.Root.Children:
-            subtree = SimpleTree(node).FindNodesByValue(val)
-            for i in subtree:
-                if i.NodeValue == val:
-                    nodes.append(i)
+        if self.Root is not None:
+            if self.Root.NodeValue == val:
+                nodes = [self.Root]
+            for node in self.Root.Children:
+                subtree = SimpleTree(node).FindNodesByValue(val)
+                for i in subtree:
+                    if i.NodeValue == val:
+                        nodes.append(i)
         return nodes
     
     def MoveNode(self, OriginalNode, NewParent):
