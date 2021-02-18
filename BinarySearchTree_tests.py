@@ -68,24 +68,30 @@ class BinarySearchTreeTest(TestCase):
         # check field "ToLeft"
         self.assertFalse(self.bst.FindNodeByKey(9).ToLeft)
         self.assertFalse(self.bst.FindNodeByKey(4).ToLeft)  
-        self.assertTrue(self.bst.FindNodeByKey(3).ToLeft)
+        self.assertFalse(self.bst.FindNodeByKey(3).ToLeft)
         self.assertFalse(self.bst.FindNodeByKey(6).ToLeft)
-        self.assertTrue(self.bst.FindNodeByKey(5).ToLeft)
-        self.assertTrue(self.bst.FindNodeByKey(7).ToLeft)
-        self.assertTrue(self.bst.FindNodeByKey(17).ToLeft)
+        self.assertFalse(self.bst.FindNodeByKey(5).ToLeft)
+        self.assertFalse(self.bst.FindNodeByKey(7).ToLeft)
+        self.assertFalse(self.bst.FindNodeByKey(17).ToLeft)
         self.assertFalse(self.bst.FindNodeByKey(22).ToLeft)
-        self.assertTrue(self.bst.FindNodeByKey(20).ToLeft)
+        self.assertFalse(self.bst.FindNodeByKey(20).ToLeft)
+
         self.assertTrue(self.bst.FindNodeByKey(1).ToLeft)
+        self.assertFalse(self.bst.FindNodeByKey(50).ToLeft)
+        self.assertFalse(self.bst.FindNodeByKey(8).ToLeft)
+        self.assertTrue(self.bst.FindNodeByKey(2).ToLeft)
+        self.assertTrue(self.bst.FindNodeByKey(19).ToLeft)
+
     def test_minmax(self):
         # Max from Root
-        self.assertEqual(22, self.bst.FinMinMax(self.bst.Root, True).Node.NodeValue)
+        self.assertEqual(22, self.bst.FinMinMax(self.bst.Root, True).NodeValue)
         # Min from Root
-        self.assertEqual(3, self.bst.FinMinMax(self.bst.Root, False).Node.NodeValue)
+        self.assertEqual(3, self.bst.FinMinMax(self.bst.Root, False).NodeValue)
         
         # Max from subtree (NodeKey = 17)
-        self.assertEqual(22, self.bst.FinMinMax(self.bst.FindNodeByKey(17).Node, True).Node.NodeValue)
+        self.assertEqual(22, self.bst.FinMinMax(self.bst.FindNodeByKey(17).Node, True).NodeValue)
         # Min from subtree (NodeKey = 4)
-        self.assertEqual(3, self.bst.FinMinMax(self.bst.FindNodeByKey(4).Node, False).Node.NodeValue)
+        self.assertEqual(3, self.bst.FinMinMax(self.bst.FindNodeByKey(4).Node, False).NodeValue)
     
     def test_delete(self):
         self.assertEqual(9, self.bst.Count())
@@ -111,12 +117,12 @@ class BinarySearchTreeTest(TestCase):
         self.assertTrue(self.bst.DeleteNodeByKey(9))
         self.assertEqual(0, self.bst.Count())
         self.assertIsNone(self.bst.FindNodeByKey(9).Node)
-        self.assertIsNone(self.bst.FinMinMax(self.bst.Root, True).Node)
-        self.assertIsNone(self.bst.FinMinMax(self.bst.Root, False).Node)
+        self.assertIsNone(self.bst.FinMinMax(self.bst.Root, True))
+        self.assertIsNone(self.bst.FinMinMax(self.bst.Root, False))
 
         self.assertTrue(self.bst.AddKeyValue(9, 9))
         self.assertEqual(1, self.bst.Count())
         self.assertIsNotNone(self.bst.FindNodeByKey(9).Node)
         
-        self.assertEqual(9, self.bst.FinMinMax(self.bst.Root, True).Node.NodeValue)
-        self.assertEqual(9, self.bst.FinMinMax(self.bst.Root, False).Node.NodeValue)
+        self.assertEqual(9, self.bst.FinMinMax(self.bst.Root, True).NodeValue)
+        self.assertEqual(9, self.bst.FinMinMax(self.bst.Root, False).NodeValue)

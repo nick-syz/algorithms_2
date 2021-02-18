@@ -21,20 +21,17 @@ class BST:
 
     def FindNodeByKey(self, key):
         result = BSTFind()
-        if self.Root is not None:
-            if self.Root.NodeKey > key and self.Root.LeftChild is None:
-                result.ToLeft = True
-                return result
-            elif self.Root.NodeKey < key and self.Root.RightChild is None:
-                return result
-        else:
+        if self.Root is None:
             return result
-        if self.Root.NodeKey == key:
+        if key < self.Root.NodeKey and self.Root.LeftChild is None:
+            result.ToLeft = True
+            return result
+        elif key > self.Root.NodeKey and self.Root.RightChild is None:
+            return result
+        elif self.Root.NodeKey == key:
             result = BSTFind()
             result.Node = self.Root
             result.NodeHasKey = True
-            if self.Root.LeftChild is None:
-                result.ToLeft = True
             return result
         if key < self.Root.NodeKey:
             return BST(self.Root.LeftChild).FindNodeByKey(key)
@@ -59,7 +56,6 @@ class BST:
             return BST(self.Root.RightChild).AddKeyValue(key, val)
 
     def FinMinMax(self, FromNode, FindMax):
-        result = BSTFind()
         if self.Root is not None:
             if FindMax:
                 while FromNode.RightChild is not None:
@@ -67,11 +63,7 @@ class BST:
             else:
                 while FromNode.LeftChild is not None:
                     FromNode = FromNode.LeftChild
-            result.Node = FromNode
-            result.NodeHasKey = True
-            if FromNode.LeftChild is None:
-                result.ToChild = True
-        return result
+            return FromNode
 
     def DeleteNodeByKey(self, key):
         if self.Root.Parent is None and self.Root.NodeKey == key:
