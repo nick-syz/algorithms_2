@@ -37,8 +37,9 @@ class BinarySearchTreeTest(TestCase):
     
     def test_find(self):
         # check field "Node"
-        self.assertIsNone(self.bst.FindNodeByKey(1).Node)
-        self.assertIsNone(self.bst.FindNodeByKey(2).Node)
+        self.assertIsNotNone(self.bst.FindNodeByKey(1).Node)
+        self.assertIsNotNone(self.bst.FindNodeByKey(2).Node)
+        
         self.assertIsNotNone(self.bst.FindNodeByKey(9).Node)
         self.assertIsNotNone(self.bst.FindNodeByKey(4).Node)
         self.assertIsNotNone(self.bst.FindNodeByKey(3).Node)  
@@ -81,6 +82,7 @@ class BinarySearchTreeTest(TestCase):
         self.assertFalse(self.bst.FindNodeByKey(8).ToLeft)
         self.assertTrue(self.bst.FindNodeByKey(2).ToLeft)
         self.assertTrue(self.bst.FindNodeByKey(19).ToLeft)
+        self.assertFalse(self.bst.FindNodeByKey(21).ToLeft)
 
     def test_minmax(self):
         # Max from Root

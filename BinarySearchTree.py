@@ -21,6 +21,7 @@ class BST:
 
     def FindNodeByKey(self, key):
         result = BSTFind()
+        result.Node = self.Root
         if self.Root is None:
             return result
         if key < self.Root.NodeKey and self.Root.LeftChild is None:
@@ -29,8 +30,6 @@ class BST:
         elif key > self.Root.NodeKey and self.Root.RightChild is None:
             return result
         elif self.Root.NodeKey == key:
-            result = BSTFind()
-            result.Node = self.Root
             result.NodeHasKey = True
             return result
         if key < self.Root.NodeKey:
