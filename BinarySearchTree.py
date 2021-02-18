@@ -67,7 +67,7 @@ class BST:
         return result
 
     def DeleteNodeByKey(self, key):
-        if self.Root.Parent == None and self.Root.NodeKey == key:
+        if self.Root.Parent is None and self.Root.NodeKey == key:
             self.Root = None
             return True
         if self.Root is None:
