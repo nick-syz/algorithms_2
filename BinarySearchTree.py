@@ -20,13 +20,20 @@ class BST:
         self.Root = node
 
     def FindNodeByKey(self, key):
-        if self.Root is None:
-            return BSTFind()
+        result = BSTFind()
+        if self.Root is not None:
+            if self.Root.NodeKey > key and self.Root.LeftChild is None:
+                result.ToLeft = True
+                return result
+            elif self.Root.NodeKey < key and self.Root.RightChild is None:
+                return result
+        else:
+            return result
         if self.Root.NodeKey == key:
             result = BSTFind()
             result.Node = self.Root
             result.NodeHasKey = True
-            if self.Root.LeftChild is None and key < self.Root.NodeKey:
+            if self.Root.LeftChild is None:
                 result.ToLeft = True
             return result
         if key < self.Root.NodeKey:

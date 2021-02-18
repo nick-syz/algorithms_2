@@ -75,7 +75,7 @@ class BinarySearchTreeTest(TestCase):
         self.assertTrue(self.bst.FindNodeByKey(17).ToLeft)
         self.assertFalse(self.bst.FindNodeByKey(22).ToLeft)
         self.assertTrue(self.bst.FindNodeByKey(20).ToLeft)
-
+        self.assertTrue(self.bst.FindNodeByKey(1).ToLeft)
     def test_minmax(self):
         # Max from Root
         self.assertEqual(22, self.bst.FinMinMax(self.bst.Root, True).Node.NodeValue)
