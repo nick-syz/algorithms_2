@@ -26,7 +26,7 @@ class BST:
             result = BSTFind()
             result.Node = self.Root
             result.NodeHasKey = True
-            if self.Root.LeftChild is None:
+            if self.Root.LeftChild is None and key < self.Root.NodeKey:
                 result.ToLeft = True
             return result
         if key < self.Root.NodeKey:
