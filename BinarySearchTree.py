@@ -99,7 +99,7 @@ class BST:
             new_child = node.RightChild
         return new_child
     
-    def ChangeParentAndChild(self, new_node, new_child):
+    def ConnectParentAndChild(self, new_node, new_child):
         if new_child != None:
             new_child.Parent = new_node.Parent
         if new_node.Parent == None:
@@ -123,7 +123,7 @@ class BST:
         
         # Connect a new_node.Children 
         # with new_node.Parent
-        self.ChangeParentAndChild(new_node, new_child)
+        self.ConnectParentAndChild(new_node, new_child)
 
         # Change key and value of the removed 
         # node with new_node
