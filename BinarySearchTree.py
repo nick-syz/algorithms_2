@@ -18,42 +18,52 @@ class BSTFind:
 class BST:
     def __init__(self, node):
         self.Root = node
+        self.count = 1
 
     def FindNodeByKey(self, key):
         result = BSTFind()
-        result.Node = self.Root
-        if self.Root is None:
-            return result
-        if key < self.Root.NodeKey and self.Root.LeftChild is None:
-            result.ToLeft = True
-            return result
-        elif key > self.Root.NodeKey and self.Root.RightChild is None:
-            return result
-        elif self.Root.NodeKey == key:
-            result.NodeHasKey = True
-            return result
-        if key < self.Root.NodeKey:
-            return BST(self.Root.LeftChild).FindNodeByKey(key)
-        else:
-            return BST(self.Root.RightChild).FindNodeByKey(key)
-    
-    def AddKeyValue(self, key, val):
-        if self.Root is None:
-            self.Root = BSTNode(key, val, None)
-            return True
-        if self.Root.NodeValue == val:
-            return False
-        if val < self.Root.NodeValue:
-            if self.Root.LeftChild is None:
-                self.Root.LeftChild = BSTNode(key, val, self.Root.Parent)
-                return True
-            return BST(self.Root.LeftChild).AddKeyValue(key, val)
-        else:
-            if self.Root.RightChild is None:
-                self.Root.RightChild = BSTNode(key, val, self.Root.Parent)
-                return True
-            return BST(self.Root.RightChild).AddKeyValue(key, val)
+        node = self.Root
+        while node is not None:
+            if node.NodeKey == key:
+                result.Node = node
+                result.NodeHasKey = True
+                return result
+            elif key < node.NodeKey:
+                if node.LeftChild is None:
+                    result.Node = node
+                    result.ToLeft = True
+                    return result
+                else:
+                    node = node.LeftChild
+            elif key > node.NodeKey:
+                if node.RightChild is None:
+                    result.Node = node
+                    return result
+                else:
+                    node = node.RightChild
+        return result
 
+    def AddKeyValue(self, key, val):
+        node = self.Root
+        while node is not None:
+            if node.NodeKey == key:
+                return False
+            elif key < node.NodeKey:
+                if node.LeftChild is None:
+                    node.LeftChild = BSTNode(key, val, node)
+                    self.count += 1
+                    return True
+                node = node.LeftChild
+            elif key > node.NodeKey:
+                if node.RightChild is None:
+                    node.RightChild = BSTNode(key, val, node)
+                    self.count += 1
+                    return True
+                node = node.RightChild
+        self.Root = BSTNode(key, val, None)
+        self.count += 1
+        return True
+    
     def FinMinMax(self, FromNode, FindMax):
         if self.Root is not None:
             if FindMax:
@@ -64,29 +74,66 @@ class BST:
                     FromNode = FromNode.LeftChild
             return FromNode
 
-    def DeleteNodeByKey(self, key):
-        if self.Root.Parent is None and self.Root.NodeKey == key:
-            self.Root = None
-            return True
-        if self.Root is None:
-            return False
-        if key < self.Root.NodeKey:
-            if self.Root.LeftChild is not None:
-                if self.Root.LeftChild.NodeKey == key:
-                    self.Root.LeftChild = None
-                    return True
-                return BST(self.Root.LeftChild).DeleteNodeByKey(key)
+    def FindPrePostNode(self, node):
+        if node.RightChild is not None:
+            return self.FinMinMax(node.RightChild, False)
+        parent = node.Parent
+        while parent is not None and node == parent.RightChild:
+            node = parent
+            parent = parent.Parent
+        return parent
+    
+    def FindNewNode(self, node):
+        new_node = None
+        if node.LeftChild == None or node.RightChild == None:
+            new_node = node
         else:
-            if self.Root.RightChild is not None:
-                if self.Root.RightChild.NodeKey == key:
-                    self.Root.RightChild = None
-                    return True
-                return BST(self.Root.RightChild).DeleteNodeByKey(key)
+            new_node = self.FindPrePostNode(node)
+        return new_node
+    
+    def FindNewChild(self, node):
+        new_child = None
+        if node.LeftChild != None:
+            new_child = node.LeftChild
+        else:
+            new_child = node.RightChild
+        return new_child
+    
+    def ChangeParentAndChild(self, new_node, new_child):
+        if new_child != None:
+            new_child.Parent = new_node.Parent
+        if new_node.Parent == None:
+            self.Root = new_child
+        elif new_node == new_node.Parent.LeftChild:
+            new_node.Parent.LeftChild = new_child
+        else:
+            new_node.Parent.RightChild = new_child
+    
+    def DeleteNodeByKey(self, key):
+        # Find the removed node
+        node = self.FindNodeByKey(key).Node
+        if node.NodeKey != key:
+            return False
+    
+        # Find new_node instead of the removed node
+        new_node = self.FindNewNode(node)
+        
+        # Find a child of the new_node
+        new_child = self.FindNewChild(new_node)
+        
+        # Connect a new_node.Children 
+        # with new_node.Parent
+        self.ChangeParentAndChild(new_node, new_child)
 
+        # Change key and value of the removed 
+        # node with new_node
+        if new_node != node:
+            node.NodeKey = new_node.NodeKey
+            node.NodeValue = new_node.NodeValue
+        self.count -= 1
+        return True
+    
     def Count(self):
-        count = 0
-        if self.Root is not None:
-            count += 1
-            count += BST(self.Root.LeftChild).Count()
-            count += BST(self.Root.RightChild).Count()
-        return count
+        if self.count and self.Root is None:
+            self.count -= 1
+        return self.count
