@@ -106,17 +106,13 @@ class BST:
         node = self.FindNodeByKey(key).Node
         if node.NodeKey != key:
             return False
-    
         # Find new_node instead of the removed node
         new_node = self.FindNewNode(node)
-        
         # Find a child of the new_node
         new_child = self.FindNewChild(new_node)
-        
         # Connect a new_node.Children 
         # with new_node.Parent
         self.ConnectParentAndChild(new_node, new_child)
-
         # Change key and value of the removed 
         # node with new_node
         if new_node != node:
