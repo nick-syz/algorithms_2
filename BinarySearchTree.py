@@ -42,25 +42,17 @@ class BST:
                 else:
                     node = node.RightChild
         return result
-
+    
     def AddKeyValue(self, key, val):
-        node = self.Root
-        while node is not None:
-            if node.NodeKey == key:
-                return False
-            elif key < node.NodeKey:
-                if node.LeftChild is None:
-                    node.LeftChild = BSTNode(key, val, node)
-                    self.count += 1
-                    return True
-                node = node.LeftChild
-            elif key > node.NodeKey:
-                if node.RightChild is None:
-                    node.RightChild = BSTNode(key, val, node)
-                    self.count += 1
-                    return True
-                node = node.RightChild
-        self.Root = BSTNode(key, val, None)
+        node = self.FindNodeByKey(key)
+        if node.NodeHasKey:
+            return False
+        if self.Root is None:
+            self.Root = BSTNode(key, val, None)
+        elif node.ToLeft:
+            node.Node.LeftChild = BSTNode(key, val, node.Node)
+        else:
+            node.Node.RightChild = BSTNode(key, val, node.Node)
         self.count += 1
         return True
     
@@ -72,7 +64,7 @@ class BST:
             else:
                 while FromNode.LeftChild is not None:
                     FromNode = FromNode.LeftChild
-            return FromNode
+        return FromNode
 
     def FindPrePostNode(self, node):
         if node.RightChild is not None:

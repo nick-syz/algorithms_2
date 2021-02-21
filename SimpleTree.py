@@ -58,3 +58,10 @@ class SimpleTree:
             if not len(i.Children):
                 count += 1
         return count
+    
+    def NodeLevel(self, node):
+        lvl = 0
+        while node.Parent is not None:
+            node = node.Parent
+            lvl += 1
+        return lvl

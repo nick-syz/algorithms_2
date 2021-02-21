@@ -5,15 +5,7 @@ import random
 class BinarySearchTreeTest(TestCase):
     def setUp(self):
         self.node_9 = BSTNode(9, 9, None)
-        self.node_4 = BSTNode(4, 4, self.node_9)
-        self.node_3 = BSTNode(3, 3, self.node_4)
-        self.node_6 = BSTNode(6, 6, self.node_4)
-        self.node_5 = BSTNode(5, 5, self.node_6)
-        self.node_7 = BSTNode(7, 7, self.node_6)
-        self.node_17 = BSTNode(17, 17, self.node_9)
-        self.node_22 = BSTNode(22, 22, self.node_17)
-        self.node_20 = BSTNode(20, 20, self.node_22)
-
+        
         self.bst = BST(self.node_9)
         
         self.bst.AddKeyValue(4, 4)
@@ -40,7 +32,12 @@ class BinarySearchTreeTest(TestCase):
         # check field "Node"
         self.assertIsNotNone(self.bst.FindNodeByKey(1).Node)
         self.assertIsNotNone(self.bst.FindNodeByKey(2).Node)
+        self.assertEqual(3, self.bst.FindNodeByKey(1).Node.NodeKey)
+        self.assertEqual(3, self.bst.FindNodeByKey(2).Node.NodeKey)
         
+        self.assertEqual(7, self.bst.FindNodeByKey(8).Node.NodeKey)
+        self.assertEqual(20, self.bst.FindNodeByKey(21).Node.NodeKey)
+
         self.assertIsNotNone(self.bst.FindNodeByKey(9).Node)
         self.assertIsNotNone(self.bst.FindNodeByKey(4).Node)
         self.assertIsNotNone(self.bst.FindNodeByKey(3).Node)  
