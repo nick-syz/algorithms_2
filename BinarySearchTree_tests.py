@@ -254,3 +254,32 @@ class BinarySearchTreeTest(TestCase):
         self.assertFalse(self.bst.FindNodeByKey(20).NodeHasKey)
         
         self.assertEqual(0, self.bst.Count())
+
+    def test_deep(self):
+        #self.assertEqual(9, len(self.bst.DeepAllNodes(0)))
+        '''
+        for i in self.bst.DeepAllNodes(0):
+            print(i.NodeKey)
+        '''
+        print('In_Order')
+        lst = self.bst.DeepAllNodes(0)
+        for i in lst:
+            print(i.NodeKey)
+
+        print('----')
+        print('Pre_Order')
+        lst = self.bst.DeepAllNodes(2)
+        for i in lst:
+            print(i.NodeKey)
+
+        print('----')
+        print('Post_order')
+        lst = self.bst.DeepAllNodes(1)
+        for i in lst:
+            print(i.NodeKey)
+
+        print('----')
+        print('Wide')
+        lst = self.bst.WideAllNodes()
+        for i in lst:
+            print(i.NodeKey)

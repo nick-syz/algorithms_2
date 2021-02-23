@@ -125,3 +125,42 @@ class BST:
         if self.count and self.Root is None:
             self.count -= 1
         return self.count
+    
+    def In_Order(self, nodes, root):
+        if root is not None:
+            self.In_Order(nodes, root.LeftChild)
+            nodes.append(root)
+            self.In_Order(nodes, root.RightChild)
+        return nodes
+
+    def Pre_Order(self, nodes, root):
+        if root is not None:
+            nodes.append(root)
+            self.Pre_Order(nodes, root.LeftChild)
+            self.Pre_Order(nodes, root.RightChild)
+        return nodes
+
+    def Post_Order(self, nodes, root):
+        if root is not None:
+            self.Post_Order(nodes, root.LeftChild)
+            self.Post_Order(nodes, root.RightChild)
+            nodes.append(root)
+        return nodes
+
+    def DeepAllNodes(self, p):
+        if p == 0:
+            return self.In_Order([], self.Root)
+        elif p == 1:
+            return self.Post_Order([], self.Root)
+        elif p == 2:
+            return self.Pre_Order([], self.Root)
+
+    def WideAllNodes(self):
+        nodes = [self.Root]
+        if self.Root is not None:
+            for i in nodes:
+                if i.LeftChild is not None:
+                    nodes.append(i.LeftChild)
+                if i.RightChild is not None:
+                    nodes.append(i.RightChild)
+        return nodes
