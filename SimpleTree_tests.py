@@ -2,6 +2,7 @@ from SimpleTree import SimpleTree, SimpleTreeNode
 from unittest import TestCase
 
 class SimpleTreeTest(TestCase):
+    
     def setUp(self):
         self.node_9 = SimpleTreeNode(9, None)
         self.node_4 = SimpleTreeNode(4, self.node_9)

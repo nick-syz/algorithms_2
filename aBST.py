@@ -1,7 +1,7 @@
 # https://skillsmart.ru/algo/15-121-cm/s9b9313o8b.html
 
 class aBST:
-
+    
     def __init__(self, depth):
         tree_size = self.depth_calc(depth)
         self.Tree = [None] * tree_size 
