@@ -8,7 +8,7 @@ class aBST:
     
     def depth_calc(self, depth):
         n = 0
-        for i in range(depth):
+        for i in range(depth+1):
             n += 2**i
         return n
 

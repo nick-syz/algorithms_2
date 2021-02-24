@@ -3,7 +3,7 @@ from unittest import TestCase
 
 class aBSTTest(TestCase):
     def setUp(self):
-        self.tree = aBST(15)
+        self.tree = aBST(3)
         self.tree.Tree = [50, 25, 75, None, 37, 62, 84, None, None, 31, 43, 55, None, None, 92]
 
     def test_find(self):
@@ -30,8 +30,8 @@ class aBSTTest(TestCase):
         self.assertEqual(None, self.tree.FindKeyIndex(130))
 
     def test_empty(self):
-        tree = aBST(4)
-
+        tree = aBST(3)
+        self.assertEqual(15, len(tree.Tree))
         self.assertEqual(0, tree.FindKeyIndex(10))
         self.assertEqual(0, tree.AddKey(10))
         self.assertEqual(0, tree.AddKey(10))
