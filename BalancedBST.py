@@ -48,10 +48,10 @@ class BalancedBST:
             right = self.TreeDepth(root_node.RightChild)
             if abs(left-right) > 1:
                 return False
-        if root_node.LeftChild is not None:
-            return self.IsBalanced(root_node.LeftChild)
-        if root_node.RightChild is not None:
-            return self.IsBalanced(root_node.RightChild)
+            if root_node.LeftChild is not None:
+                return self.IsBalanced(root_node.LeftChild)
+            if root_node.RightChild is not None:
+                return self.IsBalanced(root_node.RightChild)
         return True
 
     def WideAllNodes(self):
