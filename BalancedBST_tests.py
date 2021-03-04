@@ -6,21 +6,6 @@ class BalancedBSTTEst(TestCase):
     def setUp(self):
         self.tree = BalancedBST()
     
-    def test_generate(self):
-        arr = [i for i in range(1, 16)]
-        random.shuffle(arr)
-        
-        self.tree.GenerateTree(arr)
-        lst = []
-        for i in self.tree.WideAllNodes():
-            lst.append(i.NodeKey)
-        #print(lst)
-
-        lst = []
-        for  i in self.tree.WideAllNodes():
-            lst.append(i.Level)
-        #print(lst)
-    
     def test_balanced(self):
         self.tree.GenerateTree([4, 3, 2, 6])
         self.assertTrue(self.tree.IsBalanced(self.tree.Root))

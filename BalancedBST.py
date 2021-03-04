@@ -1,5 +1,4 @@
 # https://skillsmart.ru/algo/15-121-cm/j348z1ab7c.html
-import math
 
 class BSTNode:
     def __init__(self, key, parent):
@@ -53,13 +52,3 @@ class BalancedBST:
             if root_node.RightChild is not None:
                 return self.IsBalanced(root_node.RightChild)
         return True
-
-    def WideAllNodes(self):
-        nodes = [self.Root]
-        if self.Root is not None:
-            for i in nodes:
-                if i.LeftChild is not None:
-                    nodes.append(i.LeftChild)
-                if i.RightChild is not None:
-                    nodes.append(i.RightChild)
-        return nodes
