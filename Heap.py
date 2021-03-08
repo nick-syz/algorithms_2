@@ -24,13 +24,13 @@ class Heap:
         if largest != i:
             self.Swap(largest, i)
             return self.SiftDown(largest, array)
-
-    def SiftUp(self, i):
-        while i > 0 and (self.HeapArray[(i-1)//2] is None or \
-                self.HeapArray[i] > self.HeapArray[(i-1)//2]):
+    
+    def SiftUp(self, i, array):
+        while i > 0 and (array[(i-1)//2] is None or \
+                array[i] > array[(i-1)//2]):
             self.Swap((i-1)//2, i)
             i = (i-1)//2
-
+    
     def GetLast(self, isNone):
         i = len(self.HeapArray)-1
         while i >= 0:
@@ -44,18 +44,17 @@ class Heap:
         if len(array) <= (2**(depth+1)-1):
             self.HeapArray = array[:]
             self.count = len(array)
-            length = 2**(depth+1)-1
-            for i in range(length-len(array)):
+            for i in range(2**(depth+1)-1 - len(array)):
                 self.HeapArray.append(None)
             for key in range(self.count-1,-1,-1):
-                self.SiftUp(key)
+                self.SiftUp(key, self.HeapArray)
     
     def GetMax(self):
         if self.count:
             max_key = self.HeapArray[0]
             i = self.GetLast(False)
-            self.HeapArray[0], self.HeapArray[i] = \
-                self.HeapArray[i], None
+            self.HeapArray[0] = self.HeapArray[i]
+            self.HeapArray[i] = None
             self.SiftDown(0, self.HeapArray)
             self.count -= 1
             return max_key
@@ -66,7 +65,7 @@ class Heap:
             return False
         i = self.GetLast(True)
         self.HeapArray[i] = key
-        self.SiftUp(i)
+        self.SiftUp(i, self.HeapArray)
         self.count += 1
         return True
     
