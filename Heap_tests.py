@@ -26,7 +26,6 @@ class HeapTest(TestCase):
         for i in range(10, 16):
             self.assertTrue(heap.Add(i))
         self.assertEqual(15, heap.count)
-        
         for i in range(15, 0, -1):
             self.assertEqual(i, heap.GetMax())
     
@@ -45,6 +44,7 @@ class HeapTest(TestCase):
         self.heap.MakeHeap(a, 3)
         self.assertTrue(self.heap.Add(20))
         self.assertFalse(self.heap.Add(19))
+
         self.assertTrue(self.heap.CheckHeap())
         
         b = []
@@ -53,3 +53,14 @@ class HeapTest(TestCase):
         self.heap.HeapArray = b[:]
         
         self.assertFalse(self.heap.CheckHeap())
+
+    def test_add1(self):
+        self.heap.HeapArray = [11, 9, 7, None, 8, 6, 3, None, None, None, None, 5, 4, 3, 2, 1]
+        self.heap.count = 11
+        j = 11
+        for i in [21, 10, 45, 12, 19]:
+            j += 1
+            self.assertTrue(self.heap.Add(i))
+            self.assertEqual(j, self.heap.count)
+
+        self.assertFalse(self.heap.Add(24))
