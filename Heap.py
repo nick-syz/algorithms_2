@@ -5,7 +5,7 @@ class Heap:
     def __init__(self):
         self.HeapArray = []
         self.count = 0
-        self.free_index = None
+        self.free_pos = None
     
     def Swap(self, i, j):
         self.HeapArray[i], self.HeapArray[j] = \
@@ -40,7 +40,7 @@ class Heap:
             for key in range(self.count-1,-1,-1):
                 self.SiftUp(key)
             if len(array) < len(self.HeapArray):
-                self.free_index = len(array)
+                self.free_pos = len(array)
 
     def GetMax(self):
         if self.count:
@@ -56,11 +56,11 @@ class Heap:
     def Add(self, key):
         if self.count == len(self.HeapArray):
             return False
-        i = self.free_index
+        i = self.free_pos
         if i < len(self.HeapArray)-1:
-            self.free_index += 1
+            self.free_pos += 1
         else:
-            self.free_index = None
+            self.free_pos = None
         self.count += 1
         self.HeapArray[i] = key
         self.SiftUp(i)
