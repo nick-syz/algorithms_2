@@ -21,7 +21,7 @@ class SimpleTree:
     def DeleteNode(self, NodeToDelete):
         if NodeToDelete.Parent is not None:
             NodeToDelete.Parent.Children.remove(NodeToDelete)
-
+    
     def GetAllNodes(self):
         nodes = []
         if self.Root is not None:
@@ -66,3 +66,21 @@ class SimpleTree:
             node = node.Parent
             lvl += 1
         return lvl
+    
+    def SubTreeSize(self, node):
+        count = 1
+        for child in node.Children:
+            count += self.SubTreeSize(child)
+        return count
+    
+    def FindEvenTrees(self, node, result):
+        for child in node.Children:
+            size = self.SubTreeSize(child)
+            if size % 2 == 0:
+                result.append(child.Parent)
+                result.append(child)
+            self.FindEvenTrees(child, result)
+        return result
+
+    def EvenTrees(self):
+        return self.FindEvenTrees(self.Root, [])

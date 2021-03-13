@@ -23,7 +23,7 @@ class SimpleTree:
             NodeToDelete.Parent.Children.remove(NodeToDelete)
 
     def GetAllNodes(self):
-        # ~ O(nlog(n))
+        # ~ O(n^2)
         nodes = []
         if self.Root is not None:
             nodes = [self.Root]
