@@ -1,13 +1,15 @@
 # https://skillsmart.ru/algo/15-121-cm/z9h53ee284.html
+# https://skillsmart.ru/algo/15-121-cm/e048f3bf0e.html
 
 class SimpleTreeNode:
+    
     def __init__(self, val, parent):
         self.NodeValue = val
         self.Parent = parent
         self.Children = []
 
-
 class SimpleTree:
+
     def __init__(self, root):
         self.Root = root
 
@@ -66,7 +68,7 @@ class SimpleTree:
             node = node.Parent
             lvl += 1
         return lvl
-    
+ 
     def SubTreeSize(self, node):
         count = 1
         for child in node.Children:
