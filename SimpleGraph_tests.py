@@ -93,3 +93,50 @@ class SimpleGraphTest(TestCase):
 
         self.assertFalse(self.graph.m_adjacency[0][1])
         self.assertFalse(self.graph.m_adjacency[1][0])
+
+    def test_depth(self):
+        self.graph.AddVertex('A')
+        self.graph.AddVertex('B')
+        self.graph.AddVertex('C')
+        self.graph.AddVertex('D')
+        self.graph.AddVertex('E')
+        
+        self.graph.AddEdge(0, 1)
+        self.graph.AddEdge(0, 2)
+        self.graph.AddEdge(0, 3)
+        self.graph.AddEdge(1, 3)
+        self.graph.AddEdge(2, 3)
+        self.graph.AddEdge(3, 3)
+        
+        res = []
+        for i in self.graph.DepthFirstSearch(0, 4):
+            res.append(i.Value)
+
+        self.assertFalse(len(res))
+
+        self.graph.AddEdge(1, 4)
+        self.graph.AddEdge(3, 4)
+        
+        res = []
+        for i in self.graph.DepthFirstSearch(0, 4):
+            res.append(i.Value)
+
+        self.assertEqual(['A', 'B', 'E'], res)
+
+        res = []
+        for i in self.graph.DepthFirstSearch(0, 1):
+            res.append(i.Value)
+
+        self.assertEqual(['A', 'B'], res)
+
+        res = []
+        for i in self.graph.DepthFirstSearch(0, 2):
+            res.append(i.Value)
+
+        self.assertEqual(['A', 'C'], res)
+
+        res = []
+        for i in self.graph.DepthFirstSearch(0, 3):
+            res.append(i.Value)
+
+        self.assertEqual(['A', 'D'], res)
