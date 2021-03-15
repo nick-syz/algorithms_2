@@ -140,3 +140,48 @@ class SimpleGraphTest(TestCase):
             res.append(i.Value)
 
         self.assertEqual(['A', 'D'], res)
+    
+    def test_breadth(self):
+        self.graph.AddVertex('A')
+        self.graph.AddVertex('B')
+        self.graph.AddVertex('C')
+        self.graph.AddVertex('D')
+        self.graph.AddVertex('E')
+
+        self.graph.AddEdge(0, 1)
+        self.graph.AddEdge(0, 2)
+        self.graph.AddEdge(0, 3)
+        self.graph.AddEdge(1, 3)
+        self.graph.AddEdge(1, 4)
+        self.graph.AddEdge(2, 3)
+        self.graph.AddEdge(3, 3)
+        self.graph.AddEdge(3, 4) 
+        
+        res = []
+        for i in self.graph.BreadthFirstSearch(0, 2):
+            res.append(i.Value)
+        
+        self.assertEqual(['A', 'C'], res)
+
+        res = []
+        for i in self.graph.BreadthFirstSearch(0, 4):
+            res.append(i.Value)
+
+        self.assertEqual(['A', 'B', 'E'], res)
+
+        self.graph.RemoveEdge(1, 4)
+        self.graph.RemoveEdge(3, 4)
+
+        res = []
+        for i in self.graph.BreadthFirstSearch(0, 4):
+            res.append(i.Value)
+    
+        self.assertEqual([], res)
+
+        self.graph.RemoveEdge(0, 3)
+
+        res = []
+        for i in self.graph.BreadthFirstSearch(0, 3):
+            res.append(i.Value)
+
+        self.assertEqual(['A', 'B', 'D'], res)
