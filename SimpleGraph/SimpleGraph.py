@@ -1,6 +1,7 @@
 # https://skillsmart.ru/algo/15-121-cm/x8b3ba28f6.html
 # https://skillsmart.ru/algo/15-121-cm/bcb0e51rdc.html
 # https://skillsmart.ru/algo/15-121-cm/f827a03dcc.html
+# https://skillsmart.ru/algo/15-121-cm/e2b325a2cf.html
 
 import queue
 
@@ -97,3 +98,27 @@ class SimpleGraph:
         self.vertex[VFrom].hit = True
         prev = self.BSearch(VTo, q, [])
         return self.MakePath(prev)
+    
+    def MakeGraphDict(self, matrix):
+        graph = {}
+        for i in range(len(matrix)):
+            graph[i] = []
+            for j in range(len(matrix)):
+                if matrix[i][j]:
+                    graph[i].append(j)
+        return graph
+    
+    def WeakVerticles(self):
+        self.MakeDefaultHit()
+        graph = self.MakeGraphDict(self.m_adjacency)
+        for i in range(self.max_vertex):
+            for j in graph[i]:
+                for k in graph[i]:
+                    if j != k:
+                        if k in graph[j]:
+                            self.vertex[i].hit = True
+        result = []
+        for node in self.vertex:
+            if not node.hit:
+                result.append(node)
+        return result
