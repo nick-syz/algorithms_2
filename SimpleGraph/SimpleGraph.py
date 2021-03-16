@@ -2,46 +2,7 @@
 # https://skillsmart.ru/algo/15-121-cm/bcb0e51rdc.html
 # https://skillsmart.ru/algo/15-121-cm/f827a03dcc.html
 
-class _Node:
-
-    def __init__(self, val):
-        self.value = val
-        self.next = None
-        self.prev = None
-
-class _DummyNode(_Node):
-    
-    def __init__(self):
-        super().__init__(None)
-
-class Queue:
-    
-    def __init__(self):
-        self.head = _DummyNode()
-        self.tail = _DummyNode()
-        self.head.next = self.tail
-        self.tail.prev = self.head
-        self.length = 0
-
-    def enqueue(self, item):
-        node = _Node(item)
-        node.next = self.tail
-        node.prev = self.tail.prev
-        self.tail.prev.next = node
-        self.tail.prev = node
-        self.length += 1
-
-    def dequeue(self):
-        if self.length:
-            val = self.head.next.value
-            self.head.next = self.head.next.next
-            self.head.next.prev = self.head
-            self.length -= 1
-            return val
-        return None
-
-    def size(self):
-        return self.length
+import queue
 
 class Vertex:
 
@@ -104,22 +65,35 @@ class SimpleGraph:
     def DepthFirstSearch(self, VFrom, VTo):
         self.MakeDefaultHit()
         return self.DepthSearch(VFrom, VTo, [])
-
-    def BreadthSearch(self, VFrom, VTo, result, queue):
-        if not self.vertex[VFrom].hit:
-            self.vertex[VFrom].hit = True
-            result.append(self.vertex[VFrom])
-            if self.m_adjacency[VFrom][VTo]:
-                result.append(self.vertex[VTo])
-                return result
-            for i in range(self.max_vertex):
-                if self.m_adjacency[VFrom][i] and not self.vertex[i].hit:
-                    queue.enqueue(self.vertex[i])
-        if not queue.size():
+    
+    def BSearch(self, VTo, queue, prev):
+        if not queue.qsize():
             return []
-        VFrom = queue.dequeue().index
-        return self.BreadthSearch(VFrom, VTo, result, queue)
-                
+        VFrom = queue.get().index
+        for i in range(self.max_vertex):
+            if self.m_adjacency[VFrom][i]:
+                if not self.vertex[i].hit:
+                    queue.put(self.vertex[i])
+                    self.vertex[i].hit = True
+                    prev.append(self.vertex[VFrom])
+                if i == VTo:
+                    prev.append(self.vertex[VTo])
+                    return prev
+        return self.BSearch(VTo, queue, prev)
+    
+    def MakePath(self, prev):
+        path = []
+        for i in range(1, len(prev)):
+            if prev[i] != prev[i-1]:
+                path.append(prev[i-1])
+            if i == len(prev)-1:
+                path.append(prev[i])
+        return path
+
     def BreadthFirstSearch(self, VFrom, VTo):
         self.MakeDefaultHit()
-        return self.BreadthSearch(VFrom, VTo, [], Queue())
+        q = queue.Queue()
+        q.put(self.vertex[VFrom])
+        self.vertex[VFrom].hit = True
+        prev = self.BSearch(VTo, q, [])
+        return self.MakePath(prev)

@@ -162,13 +162,13 @@ class SimpleGraphTest(TestCase):
             res.append(i.Value)
         
         self.assertEqual(['A', 'C'], res)
-
+        
         res = []
         for i in self.graph.BreadthFirstSearch(0, 4):
             res.append(i.Value)
 
         self.assertEqual(['A', 'B', 'E'], res)
-
+        
         self.graph.RemoveEdge(1, 4)
         self.graph.RemoveEdge(3, 4)
 
@@ -185,3 +185,61 @@ class SimpleGraphTest(TestCase):
             res.append(i.Value)
 
         self.assertEqual(['A', 'B', 'D'], res)
+    
+    def test_breadth1(self):
+        self.graph = SimpleGraph(8)
+
+        self.graph.AddVertex('A')
+        self.graph.AddVertex('B')
+        self.graph.AddVertex('C')
+        self.graph.AddVertex('D')
+        self.graph.AddVertex('E')
+        self.graph.AddVertex('G')
+        self.graph.AddVertex('F')
+        self.graph.AddVertex('M')
+
+        self.graph.AddEdge(0, 1)
+        self.graph.AddEdge(0, 2)
+        self.graph.AddEdge(0, 3)
+        self.graph.AddEdge(1, 3)
+        self.graph.AddEdge(1, 4)
+        self.graph.AddEdge(2, 3)
+        self.graph.AddEdge(3, 3)
+        self.graph.AddEdge(3, 4)
+        self.graph.AddEdge(4, 5)
+        self.graph.AddEdge(4, 6)
+        self.graph.AddEdge(5, 7)
+        self.graph.AddEdge(6, 7)
+
+        res = []
+        for i in self.graph.BreadthFirstSearch(0, 7):
+            res.append(i.Value)
+
+        self.assertEqual(['A', 'B', 'E', 'G', 'M'], res)
+
+        self.graph.RemoveEdge(4, 5)
+
+        res = []
+        for i in self.graph.BreadthFirstSearch(0, 7):
+            res.append(i.Value)
+
+        self.assertEqual(['A', 'B', 'E', 'F', 'M'], res)
+
+        res = []
+        for i in self.graph.BreadthFirstSearch(4, 6):
+            res.append(i.Value)
+
+        self.assertEqual(['E', 'F'], res)
+
+        self.graph.RemoveEdge(0, 3)
+        self.graph.RemoveEdge(1, 4)
+        self.graph.RemoveEdge(1, 3)
+
+        res = []
+        for i in self.graph.BreadthFirstSearch(1, 5):
+            res.append(i.Value)
+
+        self.assertEqual(['B', 'A', 'C', 'D', 'E', 'F', 'M', 'G'], res)
+
+        self.graph.RemoveEdge(3, 4)
+        self.assertEqual([], self.graph.BreadthFirstSearch(1, 5))
