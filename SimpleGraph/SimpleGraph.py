@@ -108,7 +108,7 @@ class SimpleGraph:
                     graph[i].append(j)
         return graph
     
-    def WeakVerticles(self):
+    def WeakVertices(self):
         self.MakeDefaultHit()
         graph = self.MakeGraphDict(self.m_adjacency)
         for i in range(self.max_vertex):

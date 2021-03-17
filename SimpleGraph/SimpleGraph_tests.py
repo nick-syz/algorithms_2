@@ -270,7 +270,7 @@ class SimpleGraphTest(TestCase):
         self.graph.AddEdge(6, 7)
         
         res = []
-        for i in self.graph.WeakVerticles():
+        for i in self.graph.WeakVertices():
             res.append(i.Value)
 
         self.assertEqual(['G', 'F', 'M'], res)
@@ -302,7 +302,26 @@ class SimpleGraphTest(TestCase):
         self.graph.AddEdge(7, 8)
         
         res = []
-        for i in self.graph.WeakVerticles():
+        for i in self.graph.WeakVertices():
             res.append(i.Value)
         
         self.assertEqual(['E', 'I'], res)
+
+    def test_weak2(self):
+        self.graph = SimpleGraph(4)
+
+        self.graph.AddVertex('A')
+        self.graph.AddVertex('B')
+        self.graph.AddVertex('C')
+        self.graph.AddVertex('D')
+
+        self.graph.AddEdge(0, 1)
+        self.graph.AddEdge(0, 2)
+        self.graph.AddEdge(1, 2)
+        self.graph.AddEdge(1, 3)
+        self.graph.AddEdge(2, 3)
+
+        res = []
+        for i in self.graph.WeakVertices():
+            res.append(i.Value)
+        self.assertEqual([], res)
