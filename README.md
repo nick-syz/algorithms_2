@@ -1,1 +1,2 @@
-# 2 Структуры данных и алгоритмы: Python
+# 2 Data scructures and algorithms: Python
+## Trees and Graphs
